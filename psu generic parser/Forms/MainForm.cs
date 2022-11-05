@@ -24,6 +24,7 @@ using PSULib.Support;
 using PSULib.FileClasses.Maps;
 using psu_generic_parser.Forms;
 using PSULib.FileClasses.General.Scripts;
+using System.Threading.Tasks;
 
 namespace psu_generic_parser
 {
@@ -57,7 +58,7 @@ namespace psu_generic_parser
         {
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                this.Text = "PSU Generic Parser " + Path.GetFileName(fileDialog.FileName);
+                this.Text = "PSU Generic Parser (ATERIAL) " + Path.GetFileName(fileDialog.FileName);
                 splitContainer1.Panel2.Controls.Clear();
                 openPSUArchive(fileDialog.FileName, treeView1.Nodes);
             }
@@ -1826,6 +1827,105 @@ namespace psu_generic_parser
                 else
                 {
                     e.CancelEdit = true;
+                }
+            }
+        }
+
+        private async void doubleBinResolutionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<NblChunk> nblsToDuplicate = new List<NblChunk>();
+            int binCount = 0;
+            if (!addZoneButton.Enabled || !(loadedContainer is AfsLoader))
+            {
+                MessageBox.Show("No AFS loaded");
+                return;
+            }
+            var loader = loadedContainer as AfsLoader;
+            foreach (var afsFile in loader.afsList)
+            {
+                if (afsFile.fileContents is NblLoader nblLoader)
+                {
+                    foreach (var chunk in nblLoader.chunks)
+                    {
+                        nblsToDuplicate.Add(chunk);
+
+                        foreach (var file in chunk.fileContents)
+                        {
+                            if (file.fileheader == "RIPC")
+                            {
+                                binCount++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (MessageBox.Show($"There are {binCount} total bins in this loaded AFS\n\nContinue doubling the resolution of all bins?", "Confirm", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+
+            await DoubleBinResolutions(nblsToDuplicate, binCount);
+        }
+
+        private async Task DoubleBinResolutions(List<NblChunk> nbls, int totalNblCount)
+        {
+            int current = 0;
+            int skipped = 0;
+            int updateText = 10;
+            using (var progressForm = new GenericProgressForm())
+            {
+                progressForm.DescriptionText = $"Processing NBLS\n0 / {totalNblCount}\n0 skipped";
+                progressForm.Show();
+
+                try
+                {
+                    foreach (var nbl in nbls)
+                    {
+                        foreach (var file in nbl.fileContents)
+                        {
+                            if (file.fileheader == "RIPC")
+                            {
+                                current++;
+                                try
+                                {
+                                    var memStream = new MemoryStream(file.fileContents);
+                                    var texBinFile = new Aterial.PSUTexBinFile(memStream);
+                                    byte[,] replacementData = new byte[texBinFile.IndexedImageInfo.GetLength(0) * 2, texBinFile.IndexedImageInfo.GetLength(1) * 2];
+                                    for (int h = 0; h < replacementData.GetLength(1); h++)
+                                    {
+                                        for (int w = 0; w < replacementData.GetLength(0); w++)
+                                        {
+                                            replacementData[w, h] = texBinFile.IndexedImageInfo[w / 2, h / 2];
+                                        }
+                                    }
+
+                                    texBinFile.IndexedImageInfo = replacementData;
+
+                                    file.fileContents = texBinFile.GenerateBinFile();
+
+                                    var validateStream = new MemoryStream(file.fileContents);
+                                    var validator = new Aterial.PSUTexBinFile(validateStream);
+                                }
+                                catch(Exception e) { skipped++; } //ignore file loading exceptions
+
+                                updateText--;
+                                if (updateText <= 0)
+                                {
+                                    progressForm.DescriptionText = $"Processing NBLS\n{current} / {totalNblCount}\n{skipped} skipped";
+                                    progressForm.Invalidate();
+                                    Application.DoEvents();//winforms is actually shit tho
+                                    updateText = 10;
+                                }
+                                progressForm.ProgressPercent = (double)current / (double)totalNblCount;
+                            }
+                        }
+                    }
+
+                    progressForm.Close();
+                    MessageBox.Show($"Done! Save the archive to save results to file", "Done");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"FATAL ERROR\n{e}\n\nAFS archive probably corrupt. Crashing to avoid corruption.", "FATAL ERROR");
+                    throw new Exception("FATAL ERROR", e);
                 }
             }
         }

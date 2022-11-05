@@ -261,8 +261,22 @@ namespace PSULib.FileClasses.Archives
 
         public static void createFromDirectory(string directoryName, string outputName)
         {
-            string[] filenames = Directory.GetFiles(directoryName);
-            Array.Sort(filenames);
+            string[] filenames = Directory.GetFiles(directoryName).Where(s => !s.EndsWith("__FileNameOrder.txt")).ToArray();
+            string fileNameOrder = Path.Combine(directoryName, "__FileNameOrder.txt");
+            if (File.Exists(fileNameOrder))
+            {
+                List<string> orderedFileNamesList = new List<string>();
+                orderedFileNamesList.AddRange(File.ReadAllText(fileNameOrder).Split('\n').Where(s => !string.IsNullOrWhiteSpace(s)).Select(s => s.Trim('\r')));
+                if (orderedFileNamesList.Count != filenames.Length)
+                {
+                    throw new InvalidOperationException($"__FileNameOrder.exe exists but does not match the number of files inside {directoryName}, expected {orderedFileNamesList.Count}, saw {filenames.Length}");
+                }
+                filenames = orderedFileNamesList.Select(s => Path.Combine(directoryName, s)).ToArray();
+            }
+            else
+            {
+                Array.Sort(filenames);
+            }
             int fileCount = filenames.Length;
             FileStream outStream = new FileStream(outputName, FileMode.Create);
             BinaryWriter outWriter = new BinaryWriter(outStream);

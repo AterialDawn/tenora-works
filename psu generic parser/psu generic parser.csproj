@@ -103,6 +103,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aterial\PSUTexBinFile.cs" />
     <Compile Include="Forms\FileViewers\ClothingFileViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -308,6 +309,12 @@
     <Compile Include="Forms\FileRenameForm.Designer.cs">
       <DependentUpon>FileRenameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\GenericProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GenericProgressForm.Designer.cs">
+      <DependentUpon>GenericProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\HexEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -455,6 +462,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FileRenameForm.resx">
       <DependentUpon>FileRenameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GenericProgressForm.resx">
+      <DependentUpon>GenericProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HexEditForm.resx">
       <DependentUpon>HexEditForm.cs</DependentUpon>

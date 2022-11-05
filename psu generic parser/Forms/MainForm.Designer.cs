@@ -80,6 +80,7 @@
             this.nblChunkContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.compressChunkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.doubleBinResolutionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -200,7 +201,8 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.calculateAnimationNameHashToolStripMenuItem});
+            this.calculateAnimationNameHashToolStripMenuItem,
+            this.doubleBinResolutionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -402,14 +404,14 @@
             // renameFileToolStripMenuItem
             // 
             this.renameFileToolStripMenuItem.Name = "renameFileToolStripMenuItem";
-            this.renameFileToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.renameFileToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.renameFileToolStripMenuItem.Text = "Rename File";
             this.renameFileToolStripMenuItem.Click += new System.EventHandler(this.renameFileToolStripMenuItem_Click);
             // 
             // deleteFileToolStripMenuItem
             // 
             this.deleteFileToolStripMenuItem.Name = "deleteFileToolStripMenuItem";
-            this.deleteFileToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.deleteFileToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.deleteFileToolStripMenuItem.Text = "Delete File";
             this.deleteFileToolStripMenuItem.Click += new System.EventHandler(this.deleteFileToolStripMenuItem_Click);
             // 
@@ -482,16 +484,23 @@
             // 
             this.compressChunkToolStripMenuItem.CheckOnClick = true;
             this.compressChunkToolStripMenuItem.Name = "compressChunkToolStripMenuItem";
-            this.compressChunkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.compressChunkToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.compressChunkToolStripMenuItem.Text = "Compress Chunk";
             this.compressChunkToolStripMenuItem.CheckedChanged += new System.EventHandler(this.compressChunkToolStripMenuItem_CheckedChanged);
             // 
             // addFileToolStripMenuItem
             // 
             this.addFileToolStripMenuItem.Name = "addFileToolStripMenuItem";
-            this.addFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addFileToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.addFileToolStripMenuItem.Text = "Add File";
             this.addFileToolStripMenuItem.Click += new System.EventHandler(this.addFileToolStripMenuItem_Click);
+            // 
+            // doubleBinResolutionsToolStripMenuItem
+            // 
+            this.doubleBinResolutionsToolStripMenuItem.Name = "doubleBinResolutionsToolStripMenuItem";
+            this.doubleBinResolutionsToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.doubleBinResolutionsToolStripMenuItem.Text = "Double Bin Resolutions";
+            this.doubleBinResolutionsToolStripMenuItem.Click += new System.EventHandler(this.doubleBinResolutionsToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -512,7 +521,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "PSU Generic Parser build ";
+            this.Text = "PSU Generic Parser (ATERIAL) build ";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -578,6 +587,7 @@
         private System.Windows.Forms.ToolStripMenuItem renameFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem doubleBinResolutionsToolStripMenuItem;
     }
 }
 

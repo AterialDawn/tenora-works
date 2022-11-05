@@ -298,7 +298,7 @@ namespace psu_generic_parser
 
         private void arrInitialCountUD_ValueChanged(object sender, EventArgs e)
         {
-            internalFile.spawns[spawnEntryCB.SelectedIndex].arrangements[arrangementCB.SelectedIndex].formation = (short)arrFormationUD.Value;
+            internalFile.spawns[spawnEntryCB.SelectedIndex].arrangements[arrangementCB.SelectedIndex].initialCount = (short)arrInitialCountUD.Value;
         }
 
         private void arrRespawnTriggerUD_ValueChanged(object sender, EventArgs e)

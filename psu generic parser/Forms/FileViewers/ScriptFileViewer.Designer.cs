@@ -34,6 +34,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.subroutineListBox = new System.Windows.Forms.ListBox();
+            this.subroutineListContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.findReferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label3 = new System.Windows.Forms.Label();
             this.subroutineSearchBox = new System.Windows.Forms.TextBox();
@@ -51,9 +53,10 @@
             this.ArgColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operationsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.insertRowMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.subroutineListContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.goToReferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.findReferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyOpcodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteOpcodesHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.subroutineListContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -65,13 +68,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.bufferLengthUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.operationsContextMenuStrip.SuspendLayout();
-            this.subroutineListContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // deleteRowMenuItem
             // 
             this.deleteRowMenuItem.Name = "deleteRowMenuItem";
-            this.deleteRowMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteRowMenuItem.Size = new System.Drawing.Size(221, 22);
             this.deleteRowMenuItem.Text = "Delete Row";
             this.deleteRowMenuItem.Click += new System.EventHandler(this.deleteRowMenuItem_Click);
             // 
@@ -114,6 +116,20 @@
             this.subroutineListBox.TabIndex = 8;
             this.subroutineListBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             this.subroutineListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.subroutineListBox_MouseDown);
+            // 
+            // subroutineListContextMenuStrip
+            // 
+            this.subroutineListContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.findReferencesToolStripMenuItem});
+            this.subroutineListContextMenuStrip.Name = "subroutineListContextMenuStrip";
+            this.subroutineListContextMenuStrip.Size = new System.Drawing.Size(158, 26);
+            // 
+            // findReferencesToolStripMenuItem
+            // 
+            this.findReferencesToolStripMenuItem.Name = "findReferencesToolStripMenuItem";
+            this.findReferencesToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.findReferencesToolStripMenuItem.Text = "Find References";
+            this.findReferencesToolStripMenuItem.Click += new System.EventHandler(this.findReferencesToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 
@@ -299,38 +315,42 @@
             this.operationsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.insertRowMenuItem,
             this.deleteRowMenuItem,
-            this.goToReferenceToolStripMenuItem});
+            this.goToReferenceToolStripMenuItem,
+            this.copyOpcodesToolStripMenuItem,
+            this.pasteOpcodesHereToolStripMenuItem});
             this.operationsContextMenuStrip.Name = "contextMenuStrip1";
-            this.operationsContextMenuStrip.Size = new System.Drawing.Size(139, 70);
+            this.operationsContextMenuStrip.Size = new System.Drawing.Size(222, 136);
             this.operationsContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.operationsContextMenuStrip_Opening);
             // 
             // insertRowMenuItem
             // 
             this.insertRowMenuItem.Name = "insertRowMenuItem";
-            this.insertRowMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.insertRowMenuItem.Size = new System.Drawing.Size(221, 22);
             this.insertRowMenuItem.Text = "Insert Row";
             this.insertRowMenuItem.Click += new System.EventHandler(this.insertRowMenuItem_Click);
-            // 
-            // subroutineListContextMenuStrip
-            // 
-            this.subroutineListContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.findReferencesToolStripMenuItem});
-            this.subroutineListContextMenuStrip.Name = "subroutineListContextMenuStrip";
-            this.subroutineListContextMenuStrip.Size = new System.Drawing.Size(158, 26);
             // 
             // goToReferenceToolStripMenuItem
             // 
             this.goToReferenceToolStripMenuItem.Name = "goToReferenceToolStripMenuItem";
-            this.goToReferenceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.goToReferenceToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.goToReferenceToolStripMenuItem.Text = "Go to Target";
             this.goToReferenceToolStripMenuItem.Click += new System.EventHandler(this.goToReferenceToolStripMenuItem_Click);
             // 
-            // findReferencesToolStripMenuItem
+            // copyOpcodesToolStripMenuItem
             // 
-            this.findReferencesToolStripMenuItem.Name = "findReferencesToolStripMenuItem";
-            this.findReferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.findReferencesToolStripMenuItem.Text = "Find References";
-            this.findReferencesToolStripMenuItem.Click += new System.EventHandler(this.findReferencesToolStripMenuItem_Click);
+            this.copyOpcodesToolStripMenuItem.Name = "copyOpcodesToolStripMenuItem";
+            this.copyOpcodesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyOpcodesToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.copyOpcodesToolStripMenuItem.Text = "Copy Opcodes";
+            this.copyOpcodesToolStripMenuItem.Click += new System.EventHandler(this.copyOpcodesToolStripMenuItem_Click);
+            // 
+            // pasteOpcodesHereToolStripMenuItem
+            // 
+            this.pasteOpcodesHereToolStripMenuItem.Name = "pasteOpcodesHereToolStripMenuItem";
+            this.pasteOpcodesHereToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.pasteOpcodesHereToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.pasteOpcodesHereToolStripMenuItem.Text = "Paste Opcodes Here";
+            this.pasteOpcodesHereToolStripMenuItem.Click += new System.EventHandler(this.pasteOpcodesHereToolStripMenuItem_Click);
             // 
             // ScriptFileViewer
             // 
@@ -340,6 +360,7 @@
             this.Name = "ScriptFileViewer";
             this.Size = new System.Drawing.Size(562, 444);
             this.ParentChanged += new System.EventHandler(this.ScriptFileViewer_ParentChanged);
+            this.subroutineListContextMenuStrip.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -353,7 +374,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bufferLengthUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.operationsContextMenuStrip.ResumeLayout(false);
-            this.subroutineListContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -385,5 +405,7 @@
         private System.Windows.Forms.ContextMenuStrip subroutineListContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem deleteRowMenuItem;
         private System.Windows.Forms.ToolStripMenuItem findReferencesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyOpcodesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteOpcodesHereToolStripMenuItem;
     }
 }

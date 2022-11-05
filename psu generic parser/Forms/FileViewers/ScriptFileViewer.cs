@@ -17,6 +17,7 @@ namespace psu_generic_parser
         bool forceChange = false;
         BindingSource binder = new BindingSource();
         private List<ReferenceFindDialog> children = new List<ReferenceFindDialog>();
+        int copyIndexStart = -1, copyIndexEnd = -1;
 
         public ScriptFileViewer(ScriptFile toImport)
         {
@@ -254,6 +255,7 @@ namespace psu_generic_parser
 
         private void insertRowMenuItem_Click(object sender, EventArgs e)
         {
+            int lastTopItem = dataGridView2.FirstDisplayedScrollingRowIndex;
             ScriptFile.Subroutine currentSub = internalFile.Subroutines[subroutineListBox.SelectedIndex];
             int rowToInsert = dataGridView2.Rows.GetFirstRow(DataGridViewElementStates.Selected);
             dataGridView2.ClearSelection();
@@ -262,16 +264,21 @@ namespace psu_generic_parser
             currentSub.Operations.Insert(rowToInsert, newOp);
             binder.ResetBindings(false);
             dataGridView2.Refresh();
+            dataGridView2.FirstDisplayedScrollingRowIndex = lastTopItem;
+            copyIndexStart = copyIndexEnd = -1;
         }
 
         private void deleteRowMenuItem_Click(object sender, EventArgs e)
         {
+            int lastTopItem = dataGridView2.FirstDisplayedScrollingRowIndex;
             int rowToDelete = dataGridView2.Rows.GetFirstRow(DataGridViewElementStates.Selected);
             ScriptFile.Subroutine currentSub = internalFile.Subroutines[subroutineListBox.SelectedIndex];
             dataGridView2.ClearSelection();
             currentSub.Operations.RemoveAt(rowToDelete);
             binder.ResetBindings(false);
             dataGridView2.Refresh();
+            dataGridView2.FirstDisplayedScrollingRowIndex = lastTopItem;
+            copyIndexStart = copyIndexEnd = -1;
         }
 
         private void bufferLengthUpDown_ValueChanged(object sender, EventArgs e)
@@ -337,6 +344,14 @@ namespace psu_generic_parser
             }
             else
             {
+                if (copyIndexEnd == -1 || copyIndexStart == -1)
+                {
+                    pasteOpcodesHereToolStripMenuItem.Enabled = false;
+                }
+                else
+                {
+                    pasteOpcodesHereToolStripMenuItem.Enabled = true;
+                }
                 int rowToRead = dataGridView2.Rows.GetFirstRow(DataGridViewElementStates.Selected);
                 ScriptFile.Subroutine currentSub = internalFile.Subroutines[subroutineListBox.SelectedIndex];
                 if (rowToRead < currentSub.Operations.Count)
@@ -420,6 +435,55 @@ namespace psu_generic_parser
                     dataGridView2.Rows[hti.RowIndex].Selected = true;
                 }
             }*/
+        }
+
+        private void copyOpcodesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.SelectedRows.Count > 0)
+            {
+                copyIndexStart = copyIndexEnd = dataGridView2.SelectedRows[0].Index;
+                foreach (DataGridViewRow row in dataGridView2.SelectedRows)
+                {
+                    int idx = row.Index;
+                    if (idx < copyIndexStart)
+                    {
+                        copyIndexStart = idx;
+                    }
+                    if (idx > copyIndexEnd)
+                    {
+                        copyIndexEnd = idx;
+                    }
+                }
+            }
+        }
+
+        private void pasteOpcodesHereToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (copyIndexStart == -1 || copyIndexEnd == -1 || dataGridView2.SelectedRows.Count == 0) return;
+
+            ScriptFile.Subroutine currentSub = internalFile.Subroutines[subroutineListBox.SelectedIndex];
+            int pasteStartIndex = dataGridView2.SelectedRows[0].Index;
+
+            List<ScriptFile.Operation> copied = new List<ScriptFile.Operation>(currentSub.Operations.Skip(copyIndexStart).Take((copyIndexEnd + 1) - copyIndexStart));
+
+            for (int i = 0; i <= copyIndexEnd - copyIndexStart; i++)
+            {
+                int copyStartIndex = i + copyIndexStart;
+                var currentOp = copied[i];
+
+                ScriptFile.Operation newOp = new ScriptFile.Operation();
+                newOp.Label = currentOp.Label;
+                newOp.OperandText = currentOp.OperandText;
+                newOp.OpCode = currentOp.OpCode;
+                newOp.OperandText = currentOp.OperandText;
+
+                currentSub.Operations.Insert(pasteStartIndex + i, newOp);
+            }
+
+            binder.ResetBindings(false);
+            dataGridView2.Refresh();
+
+            copyIndexStart = copyIndexEnd = -1;
         }
 
         private void ScriptFileViewer_ParentChanged(object sender, EventArgs e)
