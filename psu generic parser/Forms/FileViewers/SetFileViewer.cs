@@ -470,5 +470,32 @@ namespace psu_generic_parser
         {
             internalFile.mapData[mapListCB.SelectedIndex].headers[objectListCB.SelectedIndex].unknownPairedShort2 = (short)unknownPairedShort2UD.Value;
         }
+
+        private void changeClearBoxes_Click(object sender, EventArgs e)
+        {
+            List<ObjectEntry> objectsToEdit = new List<ObjectEntry>();
+            foreach (var mapObj in internalFile.mapData[mapListCB.SelectedIndex].headers[objectListCB.SelectedIndex].objects)
+            {
+                if (mapObj.objID == 12/*TObjBreak*/ &&
+                    mapObj.metadata[0x11] == 0x00)
+                {
+                    objectsToEdit.Add(mapObj);
+                }
+            }
+
+            if (objectsToEdit.Count > 0)
+            {
+                //Display Edit Form
+
+                using (var form = new ObjBreakEditorForm(mapListNumberUD.Value.ToString(), objectsToEdit))
+                {
+                    form.ShowDialog();
+                }
+            }
+            else
+            {
+                MessageBox.Show("There are no TOjbBreak in this list");
+            }
+        }
     }
 }

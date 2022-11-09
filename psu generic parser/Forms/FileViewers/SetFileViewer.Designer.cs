@@ -99,6 +99,7 @@ namespace psu_generic_parser
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.areaIdComboBox = new System.Windows.Forms.ComboBox();
+            this.changeClearBoxes = new System.Windows.Forms.Button();
             this.positionGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.posZUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posYUD)).BeginInit();
@@ -590,6 +591,7 @@ namespace psu_generic_parser
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.changeClearBoxes);
             this.groupBox2.Controls.Add(this.removeObjectList);
             this.groupBox2.Controls.Add(this.splitContainer1);
             this.groupBox2.Controls.Add(this.addObjectList);
@@ -1146,6 +1148,16 @@ namespace psu_generic_parser
             this.areaIdComboBox.TabIndex = 32;
             this.areaIdComboBox.SelectedIndexChanged += new System.EventHandler(this.areaIdComboBox_SelectedIndexChanged);
             // 
+            // changeClearBoxes
+            // 
+            this.changeClearBoxes.Location = new System.Drawing.Point(366, 31);
+            this.changeClearBoxes.Name = "changeClearBoxes";
+            this.changeClearBoxes.Size = new System.Drawing.Size(113, 23);
+            this.changeClearBoxes.TabIndex = 28;
+            this.changeClearBoxes.Text = "Change Clear Boxes";
+            this.changeClearBoxes.UseVisualStyleBackColor = true;
+            this.changeClearBoxes.Click += new System.EventHandler(this.changeClearBoxes_Click);
+            // 
             // SetFileViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1277,5 +1289,6 @@ namespace psu_generic_parser
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button changeClearBoxes;
     }
 }

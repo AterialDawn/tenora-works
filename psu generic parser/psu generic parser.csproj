@@ -64,6 +64,9 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAPICodePack-Core.1.1.0.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
@@ -254,6 +257,12 @@
     <Compile Include="Forms\FileViewers\SetEditorSupportClasses\HexMetadataEditor.Designer.cs">
       <DependentUpon>HexMetadataEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FileViewers\SetEditorSupportClasses\ObjBreakEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FileViewers\SetEditorSupportClasses\ObjBreakEditorForm.Designer.cs">
+      <DependentUpon>ObjBreakEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FileViewers\SetEditorSupportClasses\SetObjectMetadataEditors.cs" />
     <Compile Include="Forms\FileViewers\SetFileViewer.cs">
       <SubType>UserControl</SubType>
@@ -436,6 +445,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FileViewers\SetEditorSupportClasses\HexMetadataEditor.resx">
       <DependentUpon>HexMetadataEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FileViewers\SetEditorSupportClasses\ObjBreakEditorForm.resx">
+      <DependentUpon>ObjBreakEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FileViewers\SetFileViewer.resx">
       <DependentUpon>SetFileViewer.cs</DependentUpon>
